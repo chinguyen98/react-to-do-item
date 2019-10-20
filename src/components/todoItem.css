@@ -1,0 +1,43 @@
+.isDoneIcon{
+	width: 7%;
+	height: 7%;
+	margin-right: 2em;
+	margin-left: 0.5em;
+}
+
+.checkAllIcon{
+	width: 7%;
+	height: 7%;
+	margin-right: 2em;
+}
+
+.checkAllIcon:hover{
+	cursor: pointer;
+}
+
+.isDoneIcon:hover{
+	cursor: pointer;
+}
+
+.todoItem{
+	font-weight: 300;
+	font-size: 25px;
+	color: #4d4d4d;
+	border-bottom: 1px solid #bebebe;
+	padding: 10px 5px;
+	display: flex;
+	align-items: center;
+}
+
+.todoItem:last-child{
+	border-bottom: none;
+}
+
+.todoItem > p{
+	margin: 0;
+}
+
+.todoItem--done > p{
+	text-decoration: line-through;
+	opacity: 0.3;
+}
