@@ -17,8 +17,10 @@ class App extends Component {
 				{ title: 'Go eating', isDone: false }
 			]
 		};
+		this.checkAllStatus = true;
 		this.onKeyUp = this.onKeyUp.bind(this);
-		this.onChange=this.onChange.bind(this);
+		this.onChange = this.onChange.bind(this);
+		this.checkAll = this.checkAll.bind(this);
 	}
 
 	onItemClicked(item) {
@@ -52,7 +54,7 @@ class App extends Component {
 			}
 
 			this.setState({
-				inputItem:'',
+				inputItem: '',
 				todoItems: [
 					{ title: text, isDone: false },
 					...this.state.todoItems
@@ -61,9 +63,29 @@ class App extends Component {
 		}
 	}
 
-	onChange(e){
+	onChange(e) {
 		this.setState({
 			inputItem: e.target.value
+		})
+	}
+
+	checkAll(e) {
+		let arr;
+		if (this.checkAllStatus) {
+			arr = this.state.todoItems.map((item) => {
+				return { ...item, isDone: true }
+			})
+			
+		}else{
+			arr = this.state.todoItems.map((item) => {
+				return { ...item, isDone: false }
+			})
+		}
+		this.checkAllStatus=!this.checkAllStatus;
+		this.setState({
+			todoItems: [
+				...arr
+			]
 		})
 	}
 
@@ -74,7 +96,7 @@ class App extends Component {
 				<div className="App">
 					<h1>Simple To Do Item App</h1>
 					<div className='Header'>
-						<img className='checkAllIcon' src={checkAllIcon}></img>
+						<img onClick={this.checkAll} className='checkAllIcon' src={checkAllIcon}></img>
 						<input value={inputItem} placeholder='Add new to do here!' onKeyUp={this.onKeyUp} onChange={this.onChange} type='text'></input>
 					</div>
 					{
