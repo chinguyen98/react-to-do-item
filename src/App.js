@@ -10,6 +10,7 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
+			inputItem: '',
 			todoItems: [
 				{ title: 'Go fishing', isDone: true },
 				{ title: 'Go camping', isDone: false },
@@ -17,6 +18,7 @@ class App extends Component {
 			]
 		};
 		this.onKeyUp = this.onKeyUp.bind(this);
+		this.onChange=this.onChange.bind(this);
 	}
 
 	onItemClicked(item) {
@@ -38,8 +40,8 @@ class App extends Component {
 	}
 
 	onKeyUp(e) {
+		let text = e.target.value;
 		if (e.keyCode === 13) {
-			let text = e.target.value;
 			if (!text) {
 				return;
 			}
@@ -49,9 +51,8 @@ class App extends Component {
 				return;
 			}
 
-			console.log(text);
-
 			this.setState({
+				inputItem:'',
 				todoItems: [
 					{ title: text, isDone: false },
 					...this.state.todoItems
@@ -60,15 +61,21 @@ class App extends Component {
 		}
 	}
 
+	onChange(e){
+		this.setState({
+			inputItem: e.target.value
+		})
+	}
+
 	render() {
-		const { todoItems } = this.state;
+		const { todoItems, inputItem } = this.state;
 		if (todoItems.length) {
 			return (
 				<div className="App">
 					<h1>Simple To Do Item App</h1>
 					<div className='Header'>
 						<img className='checkAllIcon' src={checkAllIcon}></img>
-						<input placeholder='Add new to do here!' onKeyUp={this.onKeyUp} type='text'></input>
+						<input value={inputItem} placeholder='Add new to do here!' onKeyUp={this.onKeyUp} onChange={this.onChange} type='text'></input>
 					</div>
 					{
 						todoItems.length && todoItems.map((item, index) => (
