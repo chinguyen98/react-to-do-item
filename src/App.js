@@ -11,11 +11,7 @@ class App extends Component {
 		super();
 		this.state = {
 			inputItem: '',
-			todoItems: [
-				{ title: 'Go fishing', isDone: true },
-				{ title: 'Go camping', isDone: false },
-				{ title: 'Go eating', isDone: false }
-			]
+			todoItems: []
 		};
 		this.checkAllStatus = true;
 		this.onKeyUp = this.onKeyUp.bind(this);
@@ -24,8 +20,11 @@ class App extends Component {
 	}
 
 	onItemClicked(item) {
+		const { todoItems } = this.state;
+		if (todoItems.length === 0) {
+			return;
+		}
 		return (e) => {
-			const { todoItems } = this.state;
 			const isComplete = item.isDone;
 			const index = todoItems.indexOf(item);
 			this.setState({
@@ -71,17 +70,18 @@ class App extends Component {
 
 	checkAll(e) {
 		let arr;
+		if (this.state.todoItems.length === 0) return;
 		if (this.checkAllStatus) {
 			arr = this.state.todoItems.map((item) => {
 				return { ...item, isDone: true }
 			})
-			
-		}else{
+
+		} else {
 			arr = this.state.todoItems.map((item) => {
 				return { ...item, isDone: false }
 			})
 		}
-		this.checkAllStatus=!this.checkAllStatus;
+		this.checkAllStatus = !this.checkAllStatus;
 		this.setState({
 			todoItems: [
 				...arr
@@ -91,25 +91,26 @@ class App extends Component {
 
 	render() {
 		const { todoItems, inputItem } = this.state;
-		if (todoItems.length) {
-			return (
-				<div className="App">
-					<h1>Simple To Do Item App</h1>
-					<div className='Header'>
-						<img onClick={this.checkAll} className='checkAllIcon' src={checkAllIcon}></img>
-						<input value={inputItem} placeholder='Add new to do here!' onKeyUp={this.onKeyUp} onChange={this.onChange} type='text'></input>
-					</div>
+		return (
+			<div className="App">
+				<h1>Simple To Do Item App</h1>
+				<div className='Header'>
+					<img onClick={this.checkAll} className='checkAllIcon' src={checkAllIcon} alt="checkAll"></img>
+					<input value={inputItem} placeholder='Add new something here!' onKeyUp={this.onKeyUp} onChange={this.onChange} type='text'></input>
+				</div>
+				<hr></hr>
+				<div style={{ marginTop: 20 }}>
 					{
-						todoItems.length && todoItems.map((item, index) => (
+						todoItems.length !== 0 && todoItems.map((item, index) => (
 							<ToDoItem key={index} item={item} onClick={this.onItemClicked(item)} />
 						))
 					}
 					{
-						todoItems.length === 0 && 'Nothing here'
+						todoItems.length === 0 && <strong><h1>Empty!</h1></strong>
 					}
 				</div>
-			);
-		}
+			</div>
+		);
 
 	};
 

@@ -2,7 +2,8 @@
 	text-align: center;
 	width: 500px;
 	margin: 0 auto;
-	border: 1px solid black;
+	border-top: 7px solid green;
+	margin-top: 50px;
 }
 
 .App .Header{
@@ -15,6 +16,7 @@
 	font-weight: 300;
 	font-size: 25px;
 	width: 15em;	
+	border: none;
 }
 
 .App .Header input:focus{

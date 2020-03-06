@@ -10,7 +10,7 @@ class ToDoItem extends Component {
 		let className = classnames('todoItem', { 'todoItem--done': item.isDone });
 		return (
 			<div className={className}>
-				<img onClick={this.props.onClick} className='isDoneIcon' src={url}></img>
+				<img onClick={this.props.onClick} className='isDoneIcon' src={url} alt="check"></img>
 				<p>{item.title}</p>
 			</div>
 		);
