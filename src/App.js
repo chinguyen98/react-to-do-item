@@ -14,9 +14,16 @@ class App extends Component {
 			todoItems: []
 		};
 		this.checkAllStatus = true;
+
+		/* Binding */
 		this.onKeyUp = this.onKeyUp.bind(this);
 		this.onChange = this.onChange.bind(this);
 		this.checkAll = this.checkAll.bind(this);
+		this.showDoneItem = this.showDoneItem.bind(this);
+		this.showUnDoneItem = this.showUnDoneItem.bind(this);
+		this.showAll = this.showAll.bind(this);
+		this.removeDoneItem = this.removeDoneItem.bind(this);
+		this.removeAllItem = this.removeAllItem.bind(this);
 	}
 
 	onItemClicked(item) {
@@ -42,6 +49,7 @@ class App extends Component {
 
 	onKeyUp(e) {
 		let text = e.target.value;
+		let todoItems = this.state.todoItems.map(item => { return { ...item, isDisplay: true } });
 		if (e.keyCode === 13) {
 			if (!text) {
 				return;
@@ -55,8 +63,8 @@ class App extends Component {
 			this.setState({
 				inputItem: '',
 				todoItems: [
-					{ title: text, isDone: false },
-					...this.state.todoItems
+					{ title: text, isDone: false, isDisplay: true },
+					...todoItems
 				]
 			})
 		}
@@ -89,6 +97,61 @@ class App extends Component {
 		})
 	}
 
+	showAll(e) {
+		let todoItems = this.state.todoItems.map(item => { return { ...item, isDisplay: true } });
+		this.setState({
+			todoItems: [...todoItems]
+		})
+	}
+
+	showDoneItem(e) {
+		let { todoItems } = this.state;
+		this.setState({
+			todoItems: todoItems.map(item => item.isDone ? { ...item, isDisplay: true } : { ...item, isDisplay: false })
+		})
+	}
+
+	showUnDoneItem(e) {
+		let { todoItems } = this.state;
+		this.setState({
+			todoItems: todoItems.map(item => !item.isDone ? { ...item, isDisplay: true } : { ...item, isDisplay: false })
+		})
+	}
+
+	removeDoneItem(e) {
+		this.setState({
+			todoItems: [...this.state.todoItems].filter(item => !item.isDone)
+		})
+	}
+
+	removeAllItem(e) {
+		this.setState({
+			todoItems: []
+		})
+	}
+
+	renderToDoItemArea() {
+		let { todoItems } = this.state;
+		let itemsLefts = todoItems.filter(item => !item.isDone).length;
+		return (
+			<div>
+				{
+					todoItems.filter(item => item.isDisplay).map((item, index) => (
+						<ToDoItem key={index} item={item} onClick={this.onItemClicked(item)} />
+					))
+				}
+				<div className="detail">
+					<span><strong><h4>{itemsLefts} item(s) left</h4></strong></span>
+					<button onClick={this.showAll} className="btnShowAll">Show All</button>
+					<button onClick={this.showDoneItem} className="btnDone">Done</button>
+					<button onClick={this.showUnDoneItem} className="btnUnDone">not Done</button>
+					<button onClick={this.removeDoneItem} className="btnRemoveDone">Remove Done</button>
+					<button onClick={this.removeAllItem} className="btnRemoveAll">Remove All</button>
+				</div>
+			</div>
+		)
+	}
+
 	render() {
 		const { todoItems, inputItem } = this.state;
 		return (
@@ -101,9 +164,7 @@ class App extends Component {
 				<hr></hr>
 				<div style={{ marginTop: 20 }}>
 					{
-						todoItems.length !== 0 && todoItems.map((item, index) => (
-							<ToDoItem key={index} item={item} onClick={this.onItemClicked(item)} />
-						))
+						todoItems.length !== 0 && this.renderToDoItemArea()
 					}
 					{
 						todoItems.length === 0 && <strong><h1>Empty!</h1></strong>

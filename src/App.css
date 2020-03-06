@@ -41,3 +41,55 @@
 .App-link {
 	color: #09d3ac;
 }
+
+.detail{
+	background-color: rgb(241, 241, 241);
+	margin: 30px 0;
+	padding: 0 10px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.detail button{
+	height: 35px;
+	border: none;
+	border-radius: 3px;
+	box-shadow: 0px 2px 3px #000;
+	cursor: pointer;
+	outline: none;
+}
+
+.detail button.btnDone{
+	color:white;
+	background-color: rgb(31, 44, 233);
+}
+
+.detail button.btnRemoveAll{
+	color:white;
+	background-color: rgb(255, 0, 13);
+}
+
+.detail button.btnShowAll{
+	color:white;
+	background-color: rgb(162, 0, 255);
+}
+
+.detail button.btnRemoveDone{
+	color:white;
+	background-color: rgb(60, 255, 0);
+}
+
+.detail button:active{
+	background-color: rgb(9, 9, 20);
+	box-shadow: 0 0;
+}
+
+.detail button.btnDone:active{
+	background-color: rgb(9, 9, 20);
+}
+
+.detail button.btnUnDone:active{
+	background-color: rgb(9, 9, 20);
+	color: white;
+}
