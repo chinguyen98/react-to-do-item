@@ -14,16 +14,6 @@ class App extends Component {
 			todoItems: []
 		};
 		this.checkAllStatus = true;
-
-		/* Binding */
-		this.onKeyUp = this.onKeyUp.bind(this);
-		this.onChange = this.onChange.bind(this);
-		this.checkAll = this.checkAll.bind(this);
-		this.showDoneItem = this.showDoneItem.bind(this);
-		this.showUnDoneItem = this.showUnDoneItem.bind(this);
-		this.showAll = this.showAll.bind(this);
-		this.removeDoneItem = this.removeDoneItem.bind(this);
-		this.removeAllItem = this.removeAllItem.bind(this);
 	}
 
 	onItemClicked(item) {
@@ -47,7 +37,7 @@ class App extends Component {
 		}
 	}
 
-	onKeyUp(e) {
+	onKeyUp = e => {
 		let text = e.target.value;
 		let todoItems = this.state.todoItems.map(item => { return { ...item, isDisplay: true } });
 		if (e.keyCode === 13) {
@@ -70,13 +60,13 @@ class App extends Component {
 		}
 	}
 
-	onChange(e) {
+	onChange = e => {
 		this.setState({
 			inputItem: e.target.value
 		})
 	}
 
-	checkAll(e) {
+	checkAll = e => {
 		let arr;
 		if (this.state.todoItems.length === 0) return;
 		if (this.checkAllStatus) {
@@ -97,34 +87,34 @@ class App extends Component {
 		})
 	}
 
-	showAll(e) {
+	showAll = e => {
 		let todoItems = this.state.todoItems.map(item => { return { ...item, isDisplay: true } });
 		this.setState({
 			todoItems: [...todoItems]
 		})
 	}
 
-	showDoneItem(e) {
+	showDoneItem = e => {
 		let { todoItems } = this.state;
 		this.setState({
 			todoItems: todoItems.map(item => item.isDone ? { ...item, isDisplay: true } : { ...item, isDisplay: false })
 		})
 	}
 
-	showUnDoneItem(e) {
+	showUnDoneItem = e => {
 		let { todoItems } = this.state;
 		this.setState({
 			todoItems: todoItems.map(item => !item.isDone ? { ...item, isDisplay: true } : { ...item, isDisplay: false })
 		})
 	}
 
-	removeDoneItem(e) {
+	removeDoneItem = e => {
 		this.setState({
 			todoItems: [...this.state.todoItems].filter(item => !item.isDone)
 		})
 	}
 
-	removeAllItem(e) {
+	removeAllItem = e => {
 		this.setState({
 			todoItems: []
 		})
